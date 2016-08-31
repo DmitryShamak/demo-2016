@@ -1,0 +1,177 @@
+[class*="text-"] {
+  &[class*="-bold"] {
+    font-weight: 600;
+  }
+  &[class*="-meduim"] {
+    font-weight: 400;
+  }
+  &[class*="-light"] {
+    font-weight: 100;
+  }
+
+  &[class*="-uppercase"] {
+    text-transform: uppercase;
+  }
+  &[class*="-capitalize"] {
+    text-transform: capitalize;
+  }
+
+  &[class*="-small"] {
+    font-size: 0.8em;
+  }
+  &[class*="-meduim"] {
+    font-size: 1.1em;
+  }
+  &[class*="-big"] {
+    font-size: 1.4em;
+  }
+  &[class*="-huge"] {
+    font-size: 2em;
+  }
+  &[class*="-giant"] {
+    font-size: 3em;
+  }
+}
+
+[class*="margin-"] {
+  &[class*="-top"] {
+    &[class*="top-sm"] {
+      margin-top: 40px;
+    }
+    &[class*="top-md"] {
+      margin-top: 80px;
+    }
+  }
+  &[class*="-bottom"] {
+    &[class*="bottom-sm"] {
+      margin-bottom: 40px;
+    }
+    &[class*="bottom-xs"] {
+      margin-bottom: 20px;
+    }
+  }
+}
+
+.text-primary {
+  color: $textPrimaryColor;
+}
+.text-dark {
+  color: $textDarkColor;
+}
+
+[class*="bg-dark-"] {
+  position: relative;
+
+  &:before {
+    position: absolute;
+    content: "";
+    left: 0; right: 0;
+    top: 0; bottom: 0;
+
+    background-color: rgb(34, 34, 34);
+  }
+
+  &[class*="bg-dark-60"] {
+    &:before {
+      opacity: 0.6;
+    }
+  }
+}
+
+.no-selection {
+  &, * {
+    -webkit-user-select: none;
+    -o-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+  }
+}
+
+.disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+.module-lg {
+  padding: 140px 0;
+}
+.module-md {
+  padding: 100px 0;
+}
+.module-sm {
+  padding: 70px 0;
+}
+.module-xs {
+  padding: 20px 0;
+}
+
+textarea {
+  resize: none;
+  max-width: 100%;
+}
+
+.form-control {
+  background: rgba(255, 255, 255, 0.8);
+
+  border: 0;
+  border-radius: 0;
+
+  outline: 0;
+}
+
+.fixed-by-width {
+  max-width: $md;
+  margin: 0 auto;
+}
+
+[class*="fixed-"] {
+  &[class*="fixed-xs-width"] {
+    margin-left: auto;
+    margin-right: auto;
+    max-width: $xs;
+  }
+  &[class*="fixed-sm-width"] {
+    margin-left: auto;
+    margin-right: auto;
+    max-width: $sm;
+  }
+  &[class*="fixed-md-width"] {
+    margin-left: auto;
+    margin-right: auto;
+    max-width: $md;
+  }
+}
+
+input,
+select {
+  &.invalid {
+    background-color: #f2dede;
+    border-color: #ee5f5b;
+  }
+}
+
+.btn {
+  border-radius: 0;
+
+  &, &:hover,
+  &:active,
+  &:focus {
+    border: 0;
+    outline: 0;
+  }
+
+  &.btn-primary {
+    background: $bgAlternativeColor;
+
+    &:hover,
+    &:active,
+    &:focus {
+      background: $bgAlternativeColor;
+    }
+  }
+}

@@ -1,0 +1,142 @@
+@import "variables.scss";
+
+html {
+  height: 100%;
+  background-color: #111;
+}
+
+body {
+  position: relative;
+
+  margin: 0;
+  padding: 0;
+
+  min-height: 100vh;
+
+  font-family: 'Roboto Condensed', sans-serif !important;
+  font-size: 12px;
+
+  line-height: 1.8;
+
+  @import "base.scss";
+}
+
+.pictograph {
+  font-family: -webkit-pictograph;
+}
+
+.shadow-primary {
+  -webkit-box-shadow: 0px 1px 6px 0px #999;
+  -moz-box-shadow: 0px 1px 6px 0px #999;
+  box-shadow: 0px 1px 6px 0px #999;
+}
+.animated {
+  -webkit-transition: all 0.5s;
+  -moz-transition: all 0.5s;
+  transition: all 0.5s;
+}
+
+$canvasOffset: 20px;
+#app-canvas {
+  position: fixed;
+  top: 0; bottom: 0;
+  left: 0; right: 0;
+
+  color: #767676;
+
+  background-color: rgb(238, 238, 238);
+
+  &.delete-mode {
+    .data-block {
+      color: #f19090;
+    }
+  }
+
+  #start {
+    position: absolute;
+    top: 200px; left: 50px;
+
+    width: 90px; height: 90px;
+
+    border-radius: 50%;
+    background-color: #fff;
+
+    text-align: center;
+    line-height: 90px;
+    font-size: 20px;
+    text-transform: uppercase;
+    color: #b3b4b7;
+  }
+
+  #add {
+    position: absolute;
+    bottom: 50px; right: 50px;
+    width: 90px; height: 90px;
+
+    border-radius: 50%;
+
+    background-color: #4ac296;
+
+    text-align: center;
+    line-height: 90px;
+    font-size: 50px;
+    text-transform: uppercase;
+    color: #fff;
+  }
+
+  .data-block {
+    position: absolute;
+    min-width: 115px;
+
+    background-color: #ffffff;
+
+    z-index: 1;
+
+    .title {
+      padding: 10px 20px;
+      font-size: 16px;
+    }
+
+    .content {
+      border-top: 1px solid rgba(0, 0, 0, 0.1);
+    }
+
+    .items {
+      padding: 5px;
+
+      border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+
+      .item {
+        position: relative;
+
+        .item-label {
+          margin-right: 35px;
+        }
+
+        .item-control {
+          position: absolute;
+          top: 0; right: 0;
+
+          .button {
+            opacity: 0.6;
+            color: #000;
+
+            &:not(:last-child) {
+              margin-right: 3px;
+            }
+
+            &:hover {
+              opacity: 1;
+            }
+          }
+        }
+      }
+    }
+
+    .btn {
+      display: block;
+      font-size: 18px;
+      padding: 2px 20px;
+    }
+  }
+}
