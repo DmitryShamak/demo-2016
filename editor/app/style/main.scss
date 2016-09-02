@@ -1,4 +1,4 @@
-@import "variables.scss";
+@import "variables";
 
 html {
   height: 100%;
@@ -18,7 +18,7 @@ body {
 
   line-height: 1.8;
 
-  @import "base.scss";
+  @import "base";
 }
 
 .pictograph {
