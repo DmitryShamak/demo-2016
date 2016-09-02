@@ -1,10 +1,21 @@
 var SearchViewModel = function SearchViewModel() {
-	var model = {
-		modelReady: ko.observable(false),
+	var model = {};
+	model.modelReady = ko.observable(false);
 
-		onModelReady: function() {
-			this.modelReady(true);
+	model.services = ko.computed(function() {
+		if(!model.modelReady()) {
+			return [];
 		}
+
+		return [{
+			displayName : "Action",
+			price: "$33.23",
+			location: "Minsk"
+		}];
+	});
+
+	model.onModelReady = function() {
+		this.modelReady(true);
 	};
 
 	setTimeout(model.onModelReady.bind(model), 2000);

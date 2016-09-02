@@ -21,14 +21,41 @@
 <body>
     <main class="clearfix" id="content">
         <div class="model">
-            <div id="search-model">
+            <div id="search-model" class="clearfix">
                 <!-- ko if: modelReady -->
-                <div class="search-control">
-                    <div class="search-input">FORM</div>
-                    <div class="search-range">RANGE</div>
+                <div class="search-control row">
+                    <div class="search-input col-xs-12 col-sm-6">
+                        <div class="form-group">
+                            <input type="text" placeholer="Search.." />
+                        </div>
+                    </div>
+                    <div class="search-range col-xs-12 col-sm-6">
+                        <div class="form-group">
+                            <input type="text" placeholer="Search.." />
+                        </div>
+                    </div>
                 </div>
                 <div class="services-list">
-                    <div class="">Table</div>
+                    <div class="">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Type</th>
+                                    <th>Price</th>
+                                    <th>Location</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!--ko foreach: services-->
+                                <tr>
+                                    <td data-bind="text: displayName"></td>
+                                    <td data-bind="text: price"></td>
+                                    <td data-bind="text: location"></td>
+                                </tr>
+                                <!-- /ko -->
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
                 <div class="">
                     <div class="btn btn-primary">BTN</div>
