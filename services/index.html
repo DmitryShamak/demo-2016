@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <base href="/">
+
+    <title>Editor</title>
+
+    <link href='https://fonts.googleapis.com/css?family=Roboto+Condensed:400,300,300italic,400italic,700italic,700' rel='stylesheet' type='text/css'>
+
+    <link type="text/css" rel="stylesheet" href="/bower_components/font-awesome/css/font-awesome.min.css" />
+
+    <link type="text/css" rel="stylesheet" href="/build/main.css" />
+    <link type="text/css" rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.min.css" />
+
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+
+    <script src="/bower_components/knockout/dist/knockout.js"></script>
+</head>
+<body>
+    <main class="clearfix" id="content">
+        <div class="model">
+            <div id="search-model">
+                <!-- ko if: modelReady -->
+                <div class="search-control">
+                    <div class="search-input">FORM</div>
+                    <div class="search-range">RANGE</div>
+                </div>
+                <div class="services-list">
+                    <div class="">Table</div>
+                </div>
+                <div class="">
+                    <div class="btn btn-primary">BTN</div>
+                </div>
+                <!-- /ko -->
+            </div>
+        </div>
+        <div class="model">
+            <!-- ko if: modelReady -->
+            <div id="service-details-model"></div>
+            <!-- /ko -->
+
+            <!-- ko if: modelReady -->
+            <div id="service-form-model"></div>
+            <!-- /ko -->
+        </div>
+    </main>
+
+    <script src="/build/build.js"></script>
+</body>
+</html>
