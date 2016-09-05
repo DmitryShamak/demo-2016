@@ -31,7 +31,7 @@
                 <div class="search-control row form-group" data-bind="with: searchFilters">
                     <div class="search-input col-xs-12 col-sm-6">
                         <div class="form-group">
-                            <input class="form-control" type="text" placeholder="Search.." />
+                            <input class="form-control" type="text" data-bind="value: contentSearchValue, event: {change: $parent.searchByContent}" placeholder="Search.." />
                         </div>
                     </div>
                     <div class="search-range col-xs-12 col-sm-6">
@@ -40,8 +40,15 @@
                                 <span data-bind="currency: {value: minPrice, currency: '$', decimals: 2}"></span>
                             </div>
                             <div class="col-xs-8">
-                                <input type="range" data-bind="attr: {min: minPrice, max: maxPrice}, value: priceValue" placeholder="Search.." />
-                                <div class="text-center" data-bind="currency: {value: priceValue, currency: '$', decimals: 2}"></div>
+                                <div class="range-wrapper">
+                                    <input type="range" class="pull-left min-range" data-bind="attr: {min: minPrice, max: (maxPrice())/2}, value: priceMinValue, event: {change: $parent.searchByContent}" placeholder="Search.." />
+                                    <input type="range" class="pull-left max-range" data-bind="attr: {min: (maxPrice())/2, max: maxPrice}, value: priceMaxValue, event: {change: $parent.searchByContent}" placeholder="Search.." />
+                                </div>
+                                <div class="text-center">
+                                    <span data-bind="currency: {value: priceMinValue, currency: '$', decimals: 2}"></span>
+                                    <span> - </span>
+                                    <span data-bind="currency: {value: priceMaxValue, currency: '$', decimals: 2}"></span>
+                                </div>
                             </div>
                             <div class="col-xs-2">
                                 <span data-bind="currency: {value: maxPrice, currency: '$', decimals: 2}"></span>

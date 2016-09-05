@@ -46,6 +46,12 @@ body {
   }
 }
 
+.range-wrapper {
+  input[type="range"] {
+    width: 50%;
+  }
+}
+
 .drag-and-drop-zone {
   position: relative;
   height: 100px;

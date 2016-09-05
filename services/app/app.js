@@ -36,7 +36,9 @@ var SearchViewModel = function SearchViewModel() {
 	model.activeView = ko.observable();
 	model.servicesList = ko.observable();
 	model.searchFilters = ko.observable({
-		priceValue: ko.observable(0),
+		contentSearchValue: ko.observable(""),
+		priceMinValue: ko.observable(0),
+		priceMaxValue: ko.observable(100),
 		minPrice: ko.computed(function() {
 			return 0;
 		}),
@@ -44,6 +46,34 @@ var SearchViewModel = function SearchViewModel() {
 			return 100;
 		})
 	});
+
+	model.searchByContent = function searchByContent(value) {
+		var searchText = model.searchFilters().contentSearchValue().trim();
+		var searchRange = {
+			min: parseFloat(model.searchFilters().priceMinValue()),
+			max: parseFloat(model.searchFilters().priceMaxValue())
+		};
+
+		var data = JSON.parse(localStorage.getItem("services")) || [];
+		model.activeService(-1);
+		ApiEvents.fire("ON_VIEW_CHANGED", "DEFAULT");
+
+		var searchResult = data.filter(function(item) {
+			var contentMatch = true,
+				price = parseFloat(item.price),
+				priceMatch = searchRange.min <= price && price <= searchRange.max;
+
+			if(searchText) {
+				var title = item.title.toLowerCase();
+				var description = (item.description || "").toLowerCase();
+				contentMatch = title.search(searchText) !== -1 || description.search(searchText) !== -1;
+			}
+
+			return contentMatch && priceMatch;
+		});
+
+		return model.servicesList(searchResult);
+	};
 
 	model.services = ko.computed(function() {
 		if(!model.modelReady || !model.modelReady()) {
