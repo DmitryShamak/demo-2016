@@ -127,6 +127,7 @@
 
             <div id="service-form-model">
                 <!-- ko if: activeView -->
+                    <h2>Add a Service</h2>
                     <!-- ko ifnot: modelReady-->
                     <div class="pending-status text-center">
                         <i class="fa fa-refresh fa-spin fa-3x"></i>
@@ -156,7 +157,7 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <button class="btn btn-primary">Save</button>
+                            <button class="btn btn-primary" data-bind="disable: busy">Save</button>
                         </div>
                     </form>
                     <p class="text-danger" data-bind="text: formMessage"></p>

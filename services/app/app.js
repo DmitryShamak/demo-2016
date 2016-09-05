@@ -3,14 +3,7 @@ var mainStyles = require("./style/main.scss");
 var CustomEvents = require("./js/custom_events.js");
 var ApiEvents = new CustomEvents();
 
-var DefaultModel = function() {};
-DefaultModel.prototype.onModelReady = function() {
-	if(!this.modelReady) {
-		return this.modelReady = ko.observable(true);
-	}
-
-	this.modelReady(true);
-};
+var DefaultModel = require("./js/default_model.js");
 
 var convertToCurrency = function(valueAccessor) {
 	var data = ko.unwrap(valueAccessor());
