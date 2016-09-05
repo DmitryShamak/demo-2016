@@ -17,14 +17,14 @@ var SearchViewModel = function SearchViewModel() {
 	model.modelReady = ko.observable(false);
 	model.activeService = ko.observable(-1);
 	model.activeView = ko.observable();
-	model.servicesList = ko.observableArray();
+	model.servicesList = ko.observable();
 
 	model.services = ko.computed(function() {
 		if(!model.modelReady || !model.modelReady()) {
 			return [];
 		}
 
-		return model.servicesList() || JSON.parse(localStorage.getItem("services")) || [];
+		return (model.servicesList() || JSON.parse(localStorage.getItem("services")) || []);
 	});
 
 	ApiEvents.subscribe("ON_SERVICE_ADD", function(newService) {
@@ -32,7 +32,12 @@ var SearchViewModel = function SearchViewModel() {
 		services.push(newService);
 		localStorage.setItem("services", JSON.stringify(services));
 		model.servicesList(services);
-		ApiEvents.fire("ON_VIEW_CHANGED", "DEFAULT");
+		var selectedService = model.activeService();
+		if(selectedService != -1) {
+			model.handleServiceClick(services[selectedService], selectedService);
+		} else {
+			ApiEvents.fire("ON_VIEW_CHANGED", "DEFAULT");
+		}
 	});
 	model.selectedServiceIndex = ko.computed(function() {
 		return model.activeService();
