@@ -12,6 +12,16 @@ DefaultModel.prototype.onModelReady = function() {
 	this.modelReady(true);
 };
 
+ko.bindingHandlers.currency = {
+	init: function(element, valueAccessor, allBindings) {
+		var data = ko.unwrap(valueAccessor());
+		$(element).text( (data.currency || "") + data.value );
+	},
+	update: function(element, valueAccessor, allBindings) {
+		// Leave as before
+	}
+};
+
 var SearchViewModel = function SearchViewModel() {
 	var model = this;
 	model.modelReady = ko.observable(false);
@@ -55,6 +65,7 @@ var SearchViewModel = function SearchViewModel() {
 
 		ApiEvents.fire("ON_SERVICE_SELECTED", data);
 	};
+
 	setTimeout(model.onModelReady.bind(model), 100); //fake api request
 	return model;
 };
@@ -93,13 +104,36 @@ var ServiceFormViewModel = function ServiceFormViewModel() {
 	model.modelReady = ko.observable(false);
 	model.newServiceForm = ko.observable();
 	model.formMessage = ko.observable("");
-	var required = ["displayName", "price"];
+	var required = ["title", "price"];
+
+	model.handleDropMedia = function(form, event) {
+		console.log(event.target.value);
+	};
+
+	model.uploadImagePreview = ko.computed(function() {
+		if(!model.newServiceForm() || !model.newServiceForm().media()) {
+			return {};
+		}
+
+		//todo: validate image url
+		return {
+			backgroundImage: 'url{' + model.newServiceForm().media() + ")"
+		}
+	});
+
+	model.convertPrice = function(value) {
+		var result = (parseFloat(value) || 0).toFixed(2);
+		return result;
+	};
 
 	model.addService = function addService() {
 		//todo: validate new service
 		var formData = model.newServiceForm().koToJSON();
 		var valid = true;
 		model.formMessage("");
+		if(formData.price) {
+			formData.price = model.convertPrice(formData.price);
+		}
 
 		for(var key in formData) {
 			if(required.indexOf(key) != -1 && (!formData[key] || formData[key].trim() === "")) {
@@ -112,6 +146,7 @@ var ServiceFormViewModel = function ServiceFormViewModel() {
 			return false;
 		}
 
+		model.newServiceForm(null);
 		ApiEvents.fire("ON_SERVICE_ADD", formData);
 	};
 
@@ -120,7 +155,7 @@ var ServiceFormViewModel = function ServiceFormViewModel() {
 
 		if(model.activeView()) {
 			model.newServiceForm({
-				displayName: ko.observable(""),
+				title: ko.observable(""),
 				price: ko.observable(""),
 				description: ko.observable(""),
 				media: ko.observable("")
