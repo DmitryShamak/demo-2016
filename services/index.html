@@ -41,12 +41,13 @@
                             </div>
                             <div class="col-xs-8">
                                 <div class="range-wrapper">
-                                    <input type="range" class="pull-left min-range" data-bind="attr: {min: minPrice, max: (maxPrice())/2}, value: priceMinValue, event: {change: $parent.searchByContent}" placeholder="Search.." />
-                                    <input type="range" class="pull-left max-range" data-bind="attr: {min: (maxPrice())/2, max: maxPrice}, value: priceMaxValue, event: {change: $parent.searchByContent}" placeholder="Search.." />
+                                    <input type="range" class="pull-left min-range" step="1" data-bind="attr: {min: minPrice, max: Math.round(maxPrice()/2)}, value: priceMinValue, event: {change: $parent.searchByContent}" placeholder="Search.." />
+                                    <input type="range" class="pull-left max-range" step="1" data-bind="attr: {min: Math.round(maxPrice()/2), max: maxPrice}, value: priceMaxValue, event: {change: $parent.searchByContent}" placeholder="Search.." />
                                 </div>
                                 <div class="text-center">
+                                    <span>from </span>
                                     <span data-bind="currency: {value: priceMinValue, currency: '$', decimals: 2}"></span>
-                                    <span> - </span>
+                                    <span> to </span>
                                     <span data-bind="currency: {value: priceMaxValue, currency: '$', decimals: 2}"></span>
                                 </div>
                             </div>
@@ -57,29 +58,35 @@
                     </div>
                 </div>
                 <div class="services-wrapper form-group">
-                    <table>
-                        <thead>
-                        <tr>
-                            <th>Title</th>
-                            <th>Price</th>
-                            <th>Description</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <!-- ko ifnot: services().length -->
-                        <tr class="text-center">
-                            <td colspan="3">There Is No Services..</td>
-                        </tr>
-                        <!-- /ko -->
-                        <!-- ko foreach: services -->
-                        <tr class="service-item" data-bind="css: {'active': ($index() === $parent.activeService())}, click: $parent.handleServiceClick.bind(this, $data, $index())">
-                            <td data-bind="text: title"></td>
-                            <td data-bind="currency: {value: price, currency: '$', decimals: 2}"></td>
-                            <td data-bind="text: description"></td>
-                        </tr>
-                        <!-- /ko -->
-                        </tbody>
-                    </table>
+                    <div class="table-head">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th width="30%">Title</th>
+                                    <th width="20%">Price</th>
+                                    <th width="50%">Description</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                    <div class="table-content">
+                        <table>
+                            <tbody>
+                            <!-- ko ifnot: services().length -->
+                            <tr class="text-center">
+                                <td colspan="3">There Is No Services..</td>
+                            </tr>
+                            <!-- /ko -->
+                            <!-- ko foreach: services -->
+                            <tr class="service-item" data-bind="css: {'active': ($index() === $parent.activeService())}, click: $parent.handleServiceClick.bind(this, $data, $index())">
+                                <td width="30%" data-bind="text: title"></td>
+                                <td width="20%" data-bind="currency: {value: price, currency: '$', decimals: 2}"></td>
+                                <td width="50%" data-bind="text: description"></td>
+                            </tr>
+                            <!-- /ko -->
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
                 <div class="">
                     <div class="btn btn-primary" data-bind="click: showAddServiceForm">Add Service</div>

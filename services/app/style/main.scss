@@ -8,13 +8,22 @@ body {
 }
 
 .services-wrapper {
+  .table-content {
+    max-height: 250px;
+    overflow: auto;
+  }
+
   table {
     width: 100%;
 
     tr {
       outline: 1px solid rgba(0, 0, 0, 0.2);
+      vertical-align: top;
 
-      th,
+      th {
+        padding: 5px;
+      }
+
       td {
         padding: 5px;
         &:not(:last-child) {

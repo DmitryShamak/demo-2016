@@ -38,23 +38,46 @@ var SearchViewModel = function SearchViewModel() {
 	model.searchFilters = ko.observable({
 		contentSearchValue: ko.observable(""),
 		priceMinValue: ko.observable(0),
-		priceMaxValue: ko.observable(100),
-		minPrice: ko.computed(function() {
-			return 0;
-		}),
-		maxPrice: ko.computed(function() {
-			return 100;
-		})
+		priceMaxValue: ko.observable(0),
+		minPrice: ko.observable(0),
+		maxPrice: ko.observable(0)
 	});
 
+	model.getData = function getData(updateFilters) {
+		var minPrice = 0,
+			maxPrice = 0;
+
+		var data = JSON.parse(localStorage.getItem("services")) || [];
+
+		if(updateFilters) {
+			data.forEach(function(item) {
+				var price = parseFloat(item.price);
+				if(price > maxPrice) {
+					maxPrice = price;
+				}
+				if(price < minPrice) {
+					minPrice = price;
+				}
+			});
+
+			model.searchFilters().priceMinValue(Math.round(minPrice));
+			model.searchFilters().minPrice(Math.round(minPrice));
+			model.searchFilters().priceMaxValue(Math.round(maxPrice));
+			model.searchFilters().maxPrice(Math.round(maxPrice));
+		}
+
+
+		return data;
+	};
+
 	model.searchByContent = function searchByContent(value) {
-		var searchText = model.searchFilters().contentSearchValue().trim();
+		var searchText = model.searchFilters().contentSearchValue().trim().toLowerCase();
 		var searchRange = {
 			min: parseFloat(model.searchFilters().priceMinValue()),
 			max: parseFloat(model.searchFilters().priceMaxValue())
 		};
 
-		var data = JSON.parse(localStorage.getItem("services")) || [];
+		var data = model.getData();
 		model.activeService(-1);
 		ApiEvents.fire("ON_VIEW_CHANGED", "DEFAULT");
 
@@ -80,7 +103,7 @@ var SearchViewModel = function SearchViewModel() {
 			return [];
 		}
 
-		return (model.servicesList() || JSON.parse(localStorage.getItem("services")) || []);
+		return (model.servicesList() || model.getData(true));
 	});
 
 	ApiEvents.subscribe("ON_SERVICE_ADD", function(newService) {
