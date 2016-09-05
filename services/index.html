@@ -89,7 +89,7 @@
                     </div>
                 </div>
                 <div class="">
-                    <div class="btn btn-primary" data-bind="click: showAddServiceForm">Add Service</div>
+                    <div class="btn btn-primary" data-bind="click: showAddServiceForm">Add New Service</div>
                 </div>
                 <!-- /ko -->
             </div>
@@ -143,11 +143,16 @@
                         <div class="form-group">
                             <textarea class="form-control" data-bind="value: description" placeholder="Description"></textarea>
                         </div>
-                        <div class="form-group drag-and-drop-zone">
+                        <div class="form-group drag-and-drop-zone" data-bind="style: {backgroundImage: 'url('+media()+')'}">
                             <label>Drop Image Here</label>
-                            <input type="file" accept="image/*" data-bind="value: media, event: {change: $parent.handleDropMedia}" />
+                            <input type="file" accept="image/*" data-bind="event: {change: $parent.handleDropMedia}" />
                             <div class="content">
-                                <span data-bind="text: media"></span>
+                                <!-- ko if: busy -->
+                                <i class="fa fa-refresh fa-spin fa-3x"></i>
+                                <!-- /ko -->
+                                <!--ko ifnot: busy -->
+                                <span class="label" data-bind="text: fileName"></span>
+                                <!-- /ko -->
                             </div>
                         </div>
                         <div class="form-group">

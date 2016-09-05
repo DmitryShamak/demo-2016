@@ -176,19 +176,15 @@ var ServiceFormViewModel = function ServiceFormViewModel() {
 	var required = ["title", "price"];
 
 	model.handleDropMedia = function(form, event) {
-		console.log(event.target.value);
+		model.newServiceForm().fileName(event.target.files[0].name);
+		var fReader = new FileReader();
+		fReader.readAsDataURL(event.target.files[0]);
+		model.newServiceForm().busy(true);
+		fReader.onloadend = function(event){
+			model.newServiceForm().busy(false);
+			model.newServiceForm().media(event.target.result);
+		}
 	};
-
-	model.uploadImagePreview = ko.computed(function() {
-		if(!model.newServiceForm() || !model.newServiceForm().media()) {
-			return {};
-		}
-
-		//todo: validate image url
-		return {
-			backgroundImage: 'url{' + model.newServiceForm().media() + ")"
-		}
-	});
 
 	model.convertPrice = function(value) {
 		var result = (parseFloat(value) || 0).toFixed(2);
@@ -227,7 +223,9 @@ var ServiceFormViewModel = function ServiceFormViewModel() {
 				title: ko.observable(""),
 				price: ko.observable(""),
 				description: ko.observable(""),
-				media: ko.observable("")
+				fileName: ko.observable(""),
+				media: ko.observable(""),
+				busy: ko.observable(false)
 			});
 		}
 	});

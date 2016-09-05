@@ -66,6 +66,9 @@ body {
   height: 100px;
   outline: 1px solid;
 
+  background-repeat: no-repeat;
+  background-position: top center;
+
   label {
     position: relative;
     top: -15px;
@@ -95,5 +98,22 @@ body {
     font-size: 1.2em;
 
     pointer-events: none;
+
+    .label {
+      display: inline-block;
+      padding: 5px;
+
+      color: #000;
+      font-size: 1.3em;
+
+      background-color: rgba(255, 255, 255, 0.6);
+    }
+  }
+}
+
+#service-details-model {
+  img {
+    max-width: 100%;
+    max-height: 400px;
   }
 }
