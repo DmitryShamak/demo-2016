@@ -1,0 +1,35 @@
+.model {
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+.services-wrapper {
+  table {
+    width: 100%;
+
+    .service-item {
+      opacity: 0.7;
+
+      &:hover {
+       opacity: 1;
+      }
+      &:nth-child(odd) {
+        background-color: #9acfea;
+      }
+      &:nth-child(even) {
+        background-color: #b2dba1;
+      }
+      &.active {
+        background-color: #1b6d85;
+        color: #FFF;
+        opacity: 1;
+      }
+
+      cursor: pointer;
+
+      td {
+        padding: 5px;
+      }
+    }
+  }
+}

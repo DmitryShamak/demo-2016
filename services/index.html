@@ -20,10 +20,15 @@
 </head>
 <body>
     <main class="clearfix" id="content">
-        <div class="model">
+        <div class="model col-xs-6">
             <div id="search-model" class="clearfix">
+                <!-- ko ifnot: modelReady-->
+                <div class="pending-status text-center">
+                    <i class="fa fa-refresh fa-spin fa-3x"></i>
+                </div>
+                <!-- /ko -->
                 <!-- ko if: modelReady -->
-                <div class="search-control row">
+                <div class="search-control row form-group">
                     <div class="search-input col-xs-12 col-sm-6">
                         <div class="form-group">
                             <input type="text" placeholer="Search.." />
@@ -35,42 +40,85 @@
                         </div>
                     </div>
                 </div>
-                <div class="services-list">
-                    <div class="">
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>Type</th>
-                                    <th>Price</th>
-                                    <th>Location</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <!--ko foreach: services-->
-                                <tr>
-                                    <td data-bind="text: displayName"></td>
-                                    <td data-bind="text: price"></td>
-                                    <td data-bind="text: location"></td>
-                                </tr>
-                                <!-- /ko -->
-                            </tbody>
-                        </table>
-                    </div>
+                <div class="services-wrapper form-group">
+                    <table>
+                        <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Price</th>
+                            <th>Description</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <!--ko foreach: services-->
+                        <tr class="service-item" data-bind="css: {'active': ($index() === $parent.activeService())}, click: $parent.handleServiceClick.bind(this, $data, $index())">
+                            <td data-bind="text: displayName"></td>
+                            <td data-bind="text: price"></td>
+                            <td data-bind="text: description"></td>
+                        </tr>
+                        <!-- /ko -->
+                        </tbody>
+                    </table>
                 </div>
                 <div class="">
-                    <div class="btn btn-primary">BTN</div>
+                    <div class="btn btn-primary" data-bind="click: showAddServiceForm">BTN</div>
                 </div>
                 <!-- /ko -->
             </div>
         </div>
-        <div class="model">
-            <!-- ko if: modelReady -->
-            <div id="service-details-model"></div>
-            <!-- /ko -->
+        <div class="model col-xs-6">
+            <div id="service-details-model">
+                <!-- ko if: activeView -->
+                    <!-- ko ifnot: modelReady-->
+                    <div class="pending-status text-center">
+                        <i class="fa fa-refresh fa-spin fa-3x"></i>
+                    </div>
+                    <!-- /ko -->
+                    <!-- ko if: modelReady -->
+                    <div data-bind="if: selectedService()" class="service-details">
+                        <!-- ko with: selectedService-->
+                        <div class="form-group">
+                            <span data-bind="text: displayName"></span>
+                            <span data-bind="text: price"></span>
+                            <span>in</span>
+                            <span data-bind="text: location"></span>
+                        </div>
+                        <!-- /ko -->
+                    </div>
+                    <!-- /ko -->
+                <!-- /ko -->
+            </div>
 
-            <!-- ko if: modelReady -->
-            <div id="service-form-model"></div>
+            <div id="service-form-model">
+                <!-- ko if: activeView -->
+                    <!-- ko ifnot: modelReady-->
+                    <div class="pending-status text-center">
+                        <i class="fa fa-refresh fa-spin fa-3x"></i>
+                    </div>
+                    <!-- /ko -->
+                    <!-- ko if: modelReady -->
+                    <form data-bind="with: newServiceForm, submit: addService">
+                        <div class="form-group">
+                            <input class="form-control" type="text" data-bind="value: displayName" placeholder="Title (required)" />
+                        </div>
+                        <div class="form-group">
+                            <input class="form-control" type="text" data-bind="value: price" placeholder="Price (required)" />
+                        </div>
+                        <div class="form-group">
+                            <textarea class="form-control" data-bind="value: description" placeholder="Description"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Drop Files Here</label>
+                            <input class="form-control" type="file" data-bind="value: media" />
+                        </div>
+                        <div class="form-group">
+                            <button class="btn btn-primary">Save</button>
+                        </div>
+                    </form>
+                    <p class="text-danger" data-bind="text: formMessage"></p>
+                    <!-- /ko -->
             <!-- /ko -->
+            </div>
         </div>
     </main>
 
