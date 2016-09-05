@@ -12,13 +12,20 @@ DefaultModel.prototype.onModelReady = function() {
 	this.modelReady(true);
 };
 
+var convertToCurrency = function(valueAccessor) {
+	var data = ko.unwrap(valueAccessor());
+
+	var decimals = data.decimals || false;
+	var price = parseFloat(typeof data.value === "function" ? data.value() : data.value);
+	var currency = data.currency || "";
+	return (currency +  (decimals ? price.toFixed(decimals) : price));
+};
 ko.bindingHandlers.currency = {
 	init: function(element, valueAccessor, allBindings) {
-		var data = ko.unwrap(valueAccessor());
-		$(element).text( (data.currency || "") + data.value );
+		$(element).text( convertToCurrency(valueAccessor) );
 	},
 	update: function(element, valueAccessor, allBindings) {
-		// Leave as before
+		$(element).text( convertToCurrency(valueAccessor) );
 	}
 };
 
@@ -28,6 +35,15 @@ var SearchViewModel = function SearchViewModel() {
 	model.activeService = ko.observable(-1);
 	model.activeView = ko.observable();
 	model.servicesList = ko.observable();
+	model.searchFilters = ko.observable({
+		priceValue: ko.observable(0),
+		minPrice: ko.computed(function() {
+			return 0;
+		}),
+		maxPrice: ko.computed(function() {
+			return 100;
+		})
+	});
 
 	model.services = ko.computed(function() {
 		if(!model.modelReady || !model.modelReady()) {

@@ -28,15 +28,24 @@
                 </div>
                 <!-- /ko -->
                 <!-- ko if: modelReady -->
-                <div class="search-control row form-group">
+                <div class="search-control row form-group" data-bind="with: searchFilters">
                     <div class="search-input col-xs-12 col-sm-6">
                         <div class="form-group">
-                            <input type="text" placeholer="Search.." />
+                            <input class="form-control" type="text" placeholder="Search.." />
                         </div>
                     </div>
                     <div class="search-range col-xs-12 col-sm-6">
-                        <div class="form-group">
-                            <input type="text" placeholer="Search.." />
+                        <div class="form-group row">
+                            <div class="col-xs-2">
+                                <span data-bind="currency: {value: minPrice, currency: '$', decimals: 2}"></span>
+                            </div>
+                            <div class="col-xs-8">
+                                <input type="range" data-bind="attr: {min: minPrice, max: maxPrice}, value: priceValue" placeholder="Search.." />
+                                <div class="text-center" data-bind="currency: {value: priceValue, currency: '$', decimals: 2}"></div>
+                            </div>
+                            <div class="col-xs-2">
+                                <span data-bind="currency: {value: maxPrice, currency: '$', decimals: 2}"></span>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -58,7 +67,7 @@
                         <!-- ko foreach: services -->
                         <tr class="service-item" data-bind="css: {'active': ($index() === $parent.activeService())}, click: $parent.handleServiceClick.bind(this, $data, $index())">
                             <td data-bind="text: title"></td>
-                            <td data-bind="currency: {value: price, currency: '$'}"></td>
+                            <td data-bind="currency: {value: price, currency: '$', decimals: 2}"></td>
                             <td data-bind="text: description"></td>
                         </tr>
                         <!-- /ko -->
@@ -85,7 +94,7 @@
                         <div class="form-group clearfix">
                             <h2>
                                 <span data-bind="text: title"></span>
-                                <small data-bind="currency: {value: price, currency: '$'}"></small>
+                                <small data-bind="currency: {value: price, currency: '$', decimals: 2}"></small>
                             </h2>
                         </div>
                         <!-- ko if: media -->
